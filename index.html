@@ -1,186 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Market</title>
-  <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Market</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <div class="header-content">
-        <div class="logo" id="logo"><img src="img/logo.png" alt="Company Logo"></div>
-        <div class="auth-buttons">
-          <button class="btn btn-primary" id="signupBtn">Sign up</button>
-          <button class="btn btn-secondary" id="loginBtn">Log in</button>
-          <button class="btn btn-secondary hidden" id="logoutBtn">Log out</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="main-content">
-    <div class="container">
-      <!-- Login Page -->
-      <div id="loginPage" class="login-container">
-        <h1>Welcome!</h1>
-        <form id="loginForm">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Username" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Password" required>
-          </div>
-          <button type="submit" class="btn btn-primary login-btn">Log in</button>
-        </form>
-        <div class="signup-link">
-          Don't have an account? <a href="#" id="signupLink">Sign up</a>
-        </div>
-      </div>
-
-      <!-- Add Item Page -->
-      <div id="addItemPage" class="add-item-container hidden">
-        <h1>List your item</h1>
-        <form id="addItemForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="itemTitle">Title</label>
-              <input type="text" id="itemTitle" required>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo"><img src="img/logo.png" alt="Company Logo"></div>
+                <div class="nav-buttons">
+                    <button id="accountBtn" class="btn btn-outline">Account</button>
+                    <button id="logoutBtn" class="btn btn-outline">Log out</button>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="itemPrice">Price</label>
-              <input type="number" id="itemPrice" placeholder="0" required>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Home Page -->
+        <div id="homePage">
+            <!-- Available Items Section -->
+            <div class="section-header">
+                <h1 class="section-title">Available Items</h1>
+                <button id="addItemBtn" class="btn btn-primary">Add Item</button>
             </div>
-          </div>
-          <div class="form-group form-group-full">
-            <label for="itemDescription">Description</label>
-            <textarea id="itemDescription" required></textarea>
-          </div>
-          <!-- Update the Add Item Page image upload section -->
-          <div class="form-group form-group-full">
-              <label>Images (1-5)</label>
-              <div class="images-container" id="addImagesContainer"></div>
-              <div class="upload-area" id="uploadArea">
-                  <button type="button" class="btn btn-secondary">Upload Images</button>
-                  <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
-              </div>
-          </div>
-          <div class="form-actions">
-            <button type="button" class="btn btn-outline" id="cancelBtn">Cancel</button>
-            <button type="submit" class="btn btn-primary">Post Item</button>
-          </div>
-        </form>
-      </div>
+            <div id="availableItemsContainer">
+                <div id="availableEmptyState" class="empty-state">
+                    <h3>No items yet</h3>
+                    <p>Click "Add Item" to create your first listing</p>
+                </div>
+            </div>
 
-      <!-- Profile Page -->
-      <div id="profilePage" class="profile-container hidden">
-        <div class="profile-header">
-          <h1 id="profileName">Sophia Carter</h1>
-          <button class="btn btn-outline" id="editProfileBtn">Edit Profile</button>
+            <!-- Sold Items Section -->
+            <div class="section-header">
+                <h2 class="section-title">Sold Items</h2>
+            </div>
+            <div id="soldItemsContainer">
+                <div id="soldEmptyState" class="empty-state">
+                    <h3>No sold items yet</h3>
+                    <p>Items you mark as sold will appear here</p>
+                </div>
+            </div>
         </div>
-        <div class="listings-section">
-          <div class="listings-header">
-            <h2>Your Listings</h2>
-            <button class="btn btn-primary" id="addItemBtn">Add Item</button>
-          </div>
-          <div class="listings-grid" id="listingsGrid"></div>
-          
-          <!-- Add Sold Items Section -->
-          <div class="sold-listings-section">
-              <div class="listings-header">
-                  <h2>Sold Items</h2>
-              </div>
-              <div class="listings-grid" id="soldListingsGrid"></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Item Detail Page -->
-      <div id="itemDetailPage" class="item-detail-container hidden">
-        <button class="back-button" id="backBtn">← Back</button>
-        <div class="item-detail">
-          <h1 id="itemDetailTitle">Full Metal Bed Frame, Black</h1>
-          <div class="item-price" id="itemDetailPrice"></div>
-          <div class="item-images" id="itemDetailImages"></div>
-          <div class="item-description" id="itemDetailDescription"></div>
-          <div class="item-actions">
-            <button class="btn btn-danger" id="deleteItemBtn">Delete</button>
-            <button class="btn btn-outline" id="markSoldBtn">Mark Sold</button>
-            <button class="btn btn-primary" id="editItemBtn">Edit</button>
-          </div>
+        <!-- Item Details Page -->
+        <div id="itemDetailsPage" class="hidden">
+            <button id="backToHome" class="btn btn-outline mb-2">← Back to Home</button>
+            <div id="itemDetailsContent"></div>
         </div>
-      </div>
     </div>
-  </main>
 
-  <!-- Edit Profile Modal -->
-  <div id="editProfileModal" class="modal-overlay hidden">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Edit Profile</h2>
-        <button class="close-btn" id="closeProfileModal">&times;</button>
-      </div>
-      <form id="editProfileForm">
-        <div class="form-group">
-          <label for="editUsername">Username</label>
-          <input type="text" id="editUsername" required>
-        </div>
-        <div class="form-group">
-          <label for="editPassword">Password</label>
-          <input type="password" id="editPassword" required>
-        </div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-outline" id="cancelProfileEdit">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Edit Item Modal -->
-  <div id="editItemModal" class="modal-overlay edit-item-modal hidden">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Edit Item</h2>
-            <button class="close-btn" id="closeItemModal">&times;</button>
-        </div>
-        <form id="editItemForm">
-            <div class="form-row">
+    <!-- Add/Edit Item Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add Item</h2>
+            <form id="itemForm">
                 <div class="form-group">
-                    <label for="editItemTitle">Title</label>
-                    <input type="text" id="editItemTitle" required>
+                    <label for="itemTitle">Title</label>
+                    <input type="text" id="itemTitle" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="editItemPrice">Price</label>
-                    <input type="number" id="editItemPrice" required>
+                    <label for="itemPrice">Price $</label>
+                    <input type="number" id="itemPrice" class="form-control" step="0.01" min="0" required>
                 </div>
-            </div>
-            <div class="form-group form-group-full">
-                <label for="editItemDescription">Description</label>
-                <textarea id="editItemDescription" required></textarea>
-            </div>
-            <div class="form-group form-group-full">
-                <label>Images (1-5)</label>
-                <div class="edit-images-container" id="editImagesContainer"></div>
-                <div class="upload-area" id="editUploadArea">
-                    <button type="button" class="btn btn-secondary" id="editUploadBtn">Upload Images</button>
-                    <input type="file" id="editFileInput" multiple accept="image/*" style="display: none;">
+                <div class="form-group">
+                    <label for="itemDescription">Description</label>
+                    <textarea id="itemDescription" class="form-control" rows="4"></textarea>
                 </div>
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn btn-outline" id="cancelItemEdit">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label>Upload Images (1-5)</label>
+                    <div class="image-upload-area" onclick="document.getElementById('imageInput').click()">
+                        <p>Click to select images or drag and drop</p>
+                        <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                    <button type="button" id="cancelModal" class="btn btn-outline">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Item</button>
+                </div>
+            </form>
+            <div id="itemError" class="text-danger mt-2 hidden"></div>
+        </div>
     </div>
-</div>
 
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
